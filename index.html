@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="si">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>හඳහන · Hadahana</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Noto+Sans+Sinhala:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --maroon:#2a0808; --maroon2:#471010; --maroon3:#5d1616;
+  --gold:#d4af37; --gold2:#f3d27a; --gold-dim:#9a7b24;
+  --cream:#f7ead7; --mut:#cfae8a; --ink:#2a0808;
+  --red:#e0604f; --green:#7fc97f;
+  --r:20px; --shadow:0 8px 28px rgba(0,0,0,.35);
+}
+*{box-sizing:border-box; -webkit-tap-highlight-color:transparent}
+body{
+  margin:0; font-family:'Noto Sans Sinhala','Poppins',system-ui,sans-serif;
+  color:var(--cream); padding-bottom:100px; min-height:100vh;
+  background:
+    radial-gradient(1200px 600px at 50% -10%, rgba(212,175,55,.12), transparent 60%),
+    linear-gradient(160deg, var(--maroon) 0%, var(--maroon2) 55%, #1d0505 100%);
+  background-attachment:fixed;
+}
+body::before{
+  content:""; position:fixed; inset:0; pointer-events:none; opacity:.05; z-index:0;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='72' height='72' viewBox='0 0 72 72'%3E%3Cg fill='none' stroke='%23d4af37' stroke-width='1'%3E%3Cpath d='M36 8 L64 36 L36 64 L8 36 Z'/%3E%3Ccircle cx='36' cy='36' r='4'/%3E%3C/g%3E%3C/svg%3E");
+}
+header{position:relative; z-index:1; text-align:center; padding:30px 18px 10px}
+.orn{color:var(--gold); letter-spacing:10px; font-size:13px}
+header h1{margin:8px 0 2px; font-size:44px; font-weight:700; color:var(--gold2);
+  text-shadow:0 2px 18px rgba(212,175,55,.35)}
+header .en{font-family:'Poppins'; letter-spacing:8px; font-size:12px; color:var(--mut); text-transform:uppercase}
+.date-line{margin-top:12px; font-size:14px; color:var(--cream)}
+.date-line b{color:var(--gold2)}
+.wrap{position:relative; z-index:1; padding:14px 18px; max-width:640px; margin:0 auto}
+.card{
+  background:linear-gradient(165deg, rgba(93,22,22,.92), rgba(42,8,8,.94));
+  border:1px solid rgba(212,175,55,.4); border-radius:var(--r);
+  padding:18px; margin:14px 0; box-shadow:var(--shadow); position:relative; overflow:hidden;
+}
+.card::before,.card::after{
+  content:"❖"; position:absolute; color:rgba(212,175,55,.35); font-size:14px;
+}
+.card::before{top:8px; left:12px} .card::after{bottom:8px; right:12px}
+.card h3{margin:0 0 10px; font-size:16px; color:var(--gold2); font-weight:600}
+.sec-label{font-size:11px; letter-spacing:3px; color:var(--mut); text-transform:uppercase; margin:22px 2px 4px; font-family:'Poppins'}
+.big-rahu{text-align:center; padding:6px 0 2px}
+.big-rahu .t{font-size:26px; font-weight:700; color:#ffb3a3}
+.big-rahu .lbl{font-size:12px; color:var(--mut); margin-top:4px}
+.big-rahu .warn{font-size:12px; color:#e08a7a; margin-top:8px; line-height:1.7}
+.kv{display:flex; justify-content:space-between; padding:9px 2px; border-bottom:1px dashed rgba(212,175,55,.22); font-size:14px}
+.kv:last-child{border-bottom:none}
+.kv .k{color:var(--mut)} .kv .v{color:var(--cream); font-weight:600}
+.grid12{display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin-top:6px}
+.sign{background:rgba(0,0,0,.25); border:1px solid rgba(212,175,55,.35); border-radius:16px;
+  padding:14px 6px; text-align:center; cursor:pointer; transition:transform .12s}
+.sign:active{transform:scale(.95)}
+.sign .s{font-size:30px}
+.sign .n{font-size:13px; margin-top:6px; color:var(--cream); font-weight:600}
+.sign .e{font-size:10px; color:var(--mut); font-family:'Poppins'}
+select, button.cta{
+  width:100%; font-family:inherit; font-size:15px; border-radius:14px; padding:13px;
+  border:1px solid rgba(212,175,55,.5); background:rgba(0,0,0,.35); color:var(--cream); margin:8px 0;
+}
+button.cta{background:linear-gradient(135deg,var(--gold),#b8912c); color:#2a0808; font-weight:700; border:none; cursor:pointer}
+button.cta:active{transform:scale(.98)}
+.score-ring{width:150px; height:150px; margin:10px auto; position:relative}
+.score-ring svg{transform:rotate(-90deg)}
+.score-num{position:absolute; inset:0; display:grid; place-items:center; text-align:center}
+.score-num b{font-size:38px; color:var(--gold2)}
+.score-num span{font-size:11px; color:var(--mut); display:block}
+.verdict{text-align:center; font-size:17px; font-weight:700; color:var(--gold2); margin:6px 0}
+.verdict-sub{text-align:center; font-size:13px; color:var(--mut); line-height:1.8}
+/* sheet */
+.sheet{position:fixed; inset:0; z-index:50; display:none}
+.sheet.open{display:block}
+.sheet .scrim{position:absolute; inset:0; background:rgba(10,3,3,.65)}
+.sheet .panel{position:absolute; left:0; right:0; bottom:0; max-height:90vh; overflow-y:auto;
+  background:linear-gradient(170deg,#3d0d0d,#200606); border:1px solid rgba(212,175,55,.45);
+  border-bottom:none; border-radius:26px 26px 0 0; padding:10px 22px 36px; animation:up .25s ease}
+@keyframes up{from{transform:translateY(40px); opacity:.6} to{transform:none; opacity:1}}
+.grab{width:44px; height:5px; border-radius:99px; background:rgba(212,175,55,.4); margin:6px auto 12px}
+.closebtn{position:sticky; top:0; float:right; border:none; background:rgba(212,175,55,.15); color:var(--gold2);
+  width:36px; height:36px; border-radius:50%; font-size:18px; cursor:pointer; z-index:2}
+.lucky{display:flex; gap:10px; margin:12px 0}
+.lucky div{flex:1; text-align:center; background:rgba(0,0,0,.28); border:1px solid rgba(212,175,55,.3);
+  border-radius:14px; padding:10px 4px}
+.lucky .lk{font-size:10px; color:var(--mut); letter-spacing:1px}
+.lucky .lv{font-size:15px; font-weight:700; color:var(--gold2); margin-top:4px}
+.pred{font-size:14.5px; line-height:2; color:var(--cream); background:rgba(0,0,0,.22);
+  border-radius:14px; padding:14px; border-left:3px solid var(--gold)}
+.foot{margin:26px 4px 0; font-size:11.5px; color:var(--mut); line-height:2; text-align:center;
+  border-top:1px dashed rgba(212,175,55,.3); padding-top:14px}
+nav{position:fixed; left:0; right:0; bottom:0; z-index:30; display:flex;
+  background:rgba(29,5,5,.96); border-top:1px solid rgba(212,175,55,.35);
+  padding:8px 6px calc(10px + env(safe-area-inset-bottom)); backdrop-filter:blur(8px)}
+nav button{flex:1; border:none; background:none; font-family:inherit; font-size:12px; color:var(--mut);
+  cursor:pointer; padding:6px; border-radius:12px}
+nav button .ni{font-size:22px; display:block}
+nav button.on{color:var(--gold2); font-weight:700}
+.hidden{display:none!important}
+.note{font-size:12px; color:var(--mut); line-height:1.9; background:rgba(0,0,0,.22);
+  border-radius:12px; padding:10px 12px; margin-top:10px}
+</style>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9528836730254152"
+     crossorigin="anonymous"></script>
+</head>
+<body>
+
+<header>
+  <div class="orn">❖ ❖ ❖</div>
+  <h1>හඳහන</h1>
+  <div class="en">Hadahana</div>
+  <div class="date-line" id="dateLine"></div>
+</header>
+
+<!-- TODAY -->
+<div id="view-today" class="wrap">
+  <div class="card">
+    <h3>🪔 අද දවස</h3>
+    <div id="dayOverview"></div>
+  </div>
+  <div class="card">
+    <div class="big-rahu">
+      <div class="lbl">රාහු කාලය · අසුබ කාලය</div>
+      <div class="t" id="rahuTime">—</div>
+      <div class="warn">මෙම කාලයේදී වැදගත් කටයුතු ආරම්භ කිරීමෙන් වළකින්න.</div>
+    </div>
+  </div>
+  <div class="card">
+    <h3>🌅 හිරු උදාව / බැසීම <span style="font-size:11px;color:var(--mut)">(කොළඹ)</span></h3>
+    <div class="kv"><span class="k">හිරු උදාව</span><span class="v" id="sunrise">—</span></div>
+    <div class="kv"><span class="k">හිරු බැසීම</span><span class="v" id="sunset">—</span></div>
+    <div class="kv"><span class="k">දිවා කාලය</span><span class="v" id="daylen">—</span></div>
+  </div>
+  <div class="foot">සාමාන්‍ය මගපෙන්වීමක් පමණි — නිවැරදි හඳහන සඳහා ජ්‍යොතිෂවේදියෙකු හමුවන්න.<br>රාහු කාලය හිරු උදාව/බැසීම ඇසුරෙන් ගණනය කෙරේ.</div>
+</div>
+
+<!-- HOROSCOPE -->
+<div id="view-rashi" class="wrap hidden">
+  <div class="sec-label">දෛනික ලග්න පලාපල</div>
+  <div class="grid12" id="signGrid"></div>
+  <div class="foot">ඔබේ ලග්නය තෝරා අද දවසේ පලාපල බලන්න.</div>
+</div>
+
+<!-- PORONDAM -->
+<div id="view-porondam" class="wrap hidden">
+  <div class="sec-label">පොරොන්දම් පරීක්ෂාව</div>
+  <div class="card">
+    <h3>💑 රාශි පොරොන්දම්</h3>
+    <div style="font-size:12px;color:var(--mut)">ඔහුගේ රාශිය</div>
+    <select id="selA"></select>
+    <div style="font-size:12px;color:var(--mut)">ඇයගේ රාශිය</div>
+    <select id="selB"></select>
+    <button class="cta" onclick="checkPorondam()">පොරොන්දම් බලන්න</button>
+    <div id="porResult" class="hidden">
+      <div class="score-ring">
+        <svg width="150" height="150"><circle cx="75" cy="75" r="64" fill="none" stroke="rgba(212,175,55,.2)" stroke-width="12"/><circle id="scoreArc" cx="75" cy="75" r="64" fill="none" stroke="#d4af37" stroke-width="12" stroke-linecap="round" stroke-dasharray="402" stroke-dashoffset="402"/></svg>
+        <div class="score-num"><div><b id="scoreNum">0</b><span>ගැලපීම</span></div></div>
+      </div>
+      <div class="verdict" id="verdict"></div>
+      <div class="verdict-sub" id="verdictSub"></div>
+    </div>
+    <div class="note">සරල කළ අනුවාදයක් පමණි — සම්පූර්ණ පොරොන්දම් 20 පරීක්ෂාව සඳහා ජ්‍යොතිෂවේදියෙකු හමුවන්න.</div>
+  </div>
+</div>
+
+<!-- SIGN SHEET -->
+<div class="sheet" id="sheet">
+  <div class="scrim" onclick="closeSheet()"></div>
+  <div class="panel">
+    <div class="grab"></div>
+    <button class="closebtn" onclick="closeSheet()">✕</button>
+    <div id="sheetBody"></div>
+  </div>
+</div>
+
+<nav>
+  <button id="tabT" class="on" onclick="showTab('today')"><span class="ni">🪔</span>අද</button>
+  <button id="tabR" onclick="showTab('rashi')"><span class="ni">♈</span>ලග්න</button>
+  <button id="tabP" onclick="showTab('porondam')"><span class="ni">💑</span>පොරොන්දම්</button>
+</nav>
+
+<script>
+/* ---------- helpers ---------- */
+const WD_SI=["ඉරිදා","සඳුදා","අඟහරුවාදා","බදාදා","බ්‍රහස්පතින්දා","සිකුරාදා","සෙනසුරාදා"];
+const MO_SI=["ජනවාරි","පෙබරවාරි","මාර්තු","අප්‍රේල්","මැයි","ජූනි","ජූලි","අගෝස්තු","සැප්තැම්බර්","ඔක්තෝබර්","නොවැම්බර්","දෙසැම්බර්"];
+function pad(n){return (n<10?"0":"")+n;}
+function fmtT(mins){ // minutes -> පෙ.ව. 7.30
+  mins=((mins%1440)+1440)%1440;
+  let h=Math.floor(mins/60), m=Math.round(mins%60);
+  const ap = h<12 ? "පෙ.ව." : "ප.ව.";
+  let hh=h%12; if(hh===0)hh=12;
+  return ap+" "+hh+"."+pad(m);
+}
+/* NOAA sunrise/sunset, Colombo 6.9271N 79.8612E, +5:30 */
+function sunTimes(date){
+  const lat=6.9271, lng=79.8612, tz=5.5;
+  const start=new Date(date.getFullYear(),0,0);
+  const N=Math.floor((date-start)/864e5);
+  const lngHour=lng/15;
+  function calc(isRise){
+    const t=N+((isRise?6:18)-lngHour)/24;
+    const M=0.9856*t-3.289;
+    let L=M+1.916*Math.sin(M*Math.PI/180)+0.020*Math.sin(2*M*Math.PI/180)+282.634;
+    L=((L%360)+360)%360;
+    let RA=Math.atan(0.91764*Math.tan(L*Math.PI/180))*180/Math.PI;
+    RA=((RA%360)+360)%360;
+    const Lq=Math.floor(L/90)*90, RAq=Math.floor(RA/90)*90;
+    RA=RA+(Lq-RAq); RA/=15;
+    const sinDec=0.39782*Math.sin(L*Math.PI/180), cosDec=Math.cos(Math.asin(sinDec));
+    const cosH=(Math.cos(90.833*Math.PI/180)-sinDec*Math.sin(lat*Math.PI/180))/(cosDec*Math.cos(lat*Math.PI/180));
+    const H=isRise ? (360-Math.acos(cosH)*180/Math.PI)/15 : (Math.acos(cosH)*180/Math.PI)/15;
+    const T=H+RA-0.06571*t-6.622;
+    let UT=T-lngHour;
+    UT=((UT%24)+24)%24; // normalize into [0,24)
+    return (UT+tz)*60; // minutes local
+  }
+  return {rise:calc(true), set:calc(false)};
+}
+/* Rahu kalaya: daylight/8 segments; Mon:2 Tue:7 Wed:5 Thu:6 Fri:4 Sat:3 Sun:8 */
+function rahuKalaya(date){
+  const seg={1:2,2:7,3:5,4:6,5:4,6:3,0:8}[date.getDay()];
+  const s=sunTimes(date), len=(s.set-s.rise)/8;
+  return {from:s.rise+(seg-1)*len, to:s.rise+seg*len};
+}
+
+/* ---------- data ---------- */
+const SIGNS=[
+ {si:"මේෂ",en:"Aries",sym:"♈",color:"රතු",pred:[
+  "රැකියාවේ නව වගකීමක් ලැබේ. උදෑසන කාලය තීරණ සඳහා සුබයි.",
+  "පවුලේ කටයුත්තක් සාර්ථක වේ. වියදම් පාලනය කරන්න.",
+  "සෞඛ්‍යය යහපත්. පැරණි මිතුරෙකු හමුවීම සතුට ගෙනේ."]},
+ {si:"වෘෂභ",en:"Taurus",sym:"♉",color:"සුදු",pred:[
+  "මුදල් කටයුතු සඳහා සුබ දවසක්. ආයෝජන ගැන සිතන්න.",
+  "රැකියාවේ ප්‍රශංසාවක් ලැබේ. ඉවසීමෙන් කටයුතු කරන්න.",
+  "නිවසේ සාමය රැඳේ. සෞඛ්‍ය ගැන සැලකිලිමත් වන්න."]},
+ {si:"මිථුන",en:"Gemini",sym:"♊",color:"කොළ",pred:[
+  "සන්නිවේදන කටයුතු සාර්ථකයි. නව හඳුනාගැනීමක් ප්‍රයෝජනවත් වේ.",
+  "අධ්‍යයන කටයුතුවලට සුබයි. අවධානය වෙනතකට යාමෙන් වළකින්න.",
+  "ගමන් බිමන් සුබයි. පවුලේ අය සමඟ කාලය ගත කරන්න."]},
+ {si:"කටක",en:"Cancer",sym:"♋",color:"සුදු",pred:[
+  "මානසික සුවය ලැබේ. නිවසේ වැඩකටයුතු සාර්ථක වේ.",
+  "මුදල් ලැබීමක් අපේක්ෂා කළ හැක. ණය දීමෙන් වළකින්න.",
+  "සෞඛ්‍යය ගැන සැලකිලිමත් වන්න. විවේකය වැදගත්."]},
+ {si:"සිංහ",en:"Leo",sym:"♌",color:"රන්වන්",pred:[
+  "නායකත්ව අවස්ථා ලැබේ. ඔබේ අදහස් පිළිගැනේ.",
+  "රැකියාවේ ඉදිරිගමනක්. අහංකාර වීමෙන් වළකින්න.",
+  "පවුලේ උත්සවයකට සහභාගී වීම සතුට ගෙනේ."]},
+ {si:"කන්‍යා",en:"Virgo",sym:"♍",color:"කොළ",pred:[
+  "විස්තරාත්මක වැඩ සාර්ථකයි. ලේඛන කටයුතුවලට සුබයි.",
+  "සෞඛ්‍යය යහපත් අතට හැරේ. ආහාර ගැන සැලකිලිමත් වන්න.",
+  "මිතුරන්ගේ උපකාර ලැබේ. නව සැලසුමක් අරඹන්න."]},
+ {si:"තුලා",en:"Libra",sym:"♎",color:"නිල්",pred:[
+  "සමබර තීරණ ගැනීමට සුබ දවසක්. ආරවුල් සමථ වේ.",
+  "කලා කටයුතුවලට සුබයි. ආදර සබඳතා ශක්තිමත් වේ.",
+  "මුදල් කටයුතු ස්ථාවරයි. අනවශ්‍ය වියදම් අඩු කරන්න."]},
+ {si:"වෘශ්චික",en:"Scorpio",sym:"♏",color:"රතු",pred:[
+  "අධිෂ්ඨානයෙන් අරමුණු ජය ගත හැක. රහස්‍ය කටයුතු සාර්ථකයි.",
+  "රැකියාවේ වෙනසක් අපේක්ෂා කරන්න. ඉවසීම වැදගත්.",
+  "සෞඛ්‍යය ගැන අවධානය යොමු කරන්න. විවේක ගන්න."]},
+ {si:"ධනු",en:"Sagittarius",sym:"♐",color:"කහ",pred:[
+  "ගමන් හා අධ්‍යයන සඳහා සුබයි. නව දැනුමක් ලැබේ.",
+  "වාසනාවන්ත දවසක්. නව ආරම්භයන්ට සුබයි.",
+  "පවුලේ සහයෝගය ලැබේ. ආගමික කටයුතුවලට සුබයි."]},
+ {si:"මකර",en:"Capricorn",sym:"♑",color:"නිල්",pred:[
+  "වගකීම් ඉටු කිරීමෙන් ප්‍රශංසා ලැබේ. ඉලක්ක කරා ළඟා වේ.",
+  "මුදල් ඉතිරි කිරීමට සුබයි. දිගුකාලීන සැලසුම් සකසන්න.",
+  "සෞඛ්‍යය ස්ථාවරයි. ව්‍යායාමයට කාලය වෙන් කරන්න."]},
+ {si:"කුම්භ",en:"Aquarius",sym:"♒",color:"තද නිල්",pred:[
+  "නව අදහස්වලට පිළිගැනීමක්. මිතුරු සමාගම සතුට ගෙනේ.",
+  "තාක්ෂණික කටයුතුවලට සුබයි. අත්හදා බැලීම් සාර්ථකයි.",
+  "පවුලේ කටයුත්තකට ඔබේ මැදිහත්වීම අවශ්‍ය වේ."]},
+ {si:"මීන",en:"Pisces",sym:"♓",color:"කහ",pred:[
+  "සංවේදී කටයුතුවලට සුබයි. කලාත්මක දක්ෂතා බැබළේ.",
+  "මානසික සුවය සඳහා විවේකය ගන්න. භාවනාවට සුබයි.",
+  "ආදරණීයයන්ගේ සහය ලැබේ. පරිත්‍යාගශීලී වන්න."]}
+];
+const DAY_NOTES=[
+ "බොහෝ ලග්න හිමියන්ට අද දවස සුබදායකයි. උදෑසන කාලය වැදගත් වැඩට යොදවන්න.",
+ "අද දවස මධ්‍යස්ථයි. ඉවසීමෙන් කටයුතු කළොත් සාර්ථක වේ.",
+ "අද ආගමික කටයුතුවලට විශේෂ සුබ දවසක්. පින්කම්වල යෙදෙන්න."
+];
+
+/* ---------- render ---------- */
+const today=new Date();
+const doy=Math.floor((today-new Date(today.getFullYear(),0,0))/864e5);
+document.getElementById("dateLine").innerHTML=
+  "<b>"+today.getFullYear()+" "+MO_SI[today.getMonth()]+" "+today.getDate()+", "+WD_SI[today.getDay()]+"</b>";
+document.getElementById("dayOverview").innerHTML=
+  '<div class="pred">'+DAY_NOTES[doy%DAY_NOTES.length]+'</div>';
+(function(){
+  const s=sunTimes(today), r=rahuKalaya(today);
+  document.getElementById("sunrise").textContent=fmtT(s.rise);
+  document.getElementById("sunset").textContent=fmtT(s.set);
+  const dl=Math.round(s.set-s.rise);
+  document.getElementById("daylen").textContent=Math.floor(dl/60)+" පැය "+(dl%60)+" මිනිත්තු";
+  document.getElementById("rahuTime").textContent=fmtT(r.from)+" – "+fmtT(r.to);
+})();
+(function(){
+  const g=document.getElementById("signGrid"); g.innerHTML="";
+  SIGNS.forEach(function(sg,i){
+    const d=document.createElement("div"); d.className="sign";
+    d.onclick=function(){openSign(i);};
+    d.innerHTML='<div class="s">'+sg.sym+'</div><div class="n">'+sg.si+'</div><div class="e">'+sg.en+'</div>';
+    g.appendChild(d);
+  });
+  const a=document.getElementById("selA"), b=document.getElementById("selB");
+  SIGNS.forEach(function(sg,i){
+    a.add(new Option(sg.si+" · "+sg.en, i));
+    b.add(new Option(sg.si+" · "+sg.en, i));
+  });
+  b.selectedIndex=6;
+})();
+function openSign(i){
+  const sg=SIGNS[i], v=(doy+i)%3, num=(doy+i)%9+1;
+  document.getElementById("sheetBody").innerHTML=
+    '<h2 style="margin:4px 40px 2px 0;font-size:24px;color:var(--gold2)">'+sg.sym+' '+sg.si+'</h2>'+
+    '<div style="font-size:12px;color:var(--mut);font-family:Poppins;margin-bottom:8px">'+sg.en+' · අද දවසේ පලාපල</div>'+
+    '<div class="lucky">'+
+    '<div><div class="lk">වාසනාවන්ත අංකය</div><div class="lv">'+num+'</div></div>'+
+    '<div><div class="lk">වාසනාවන්ත වර්ණය</div><div class="lv">'+sg.color+'</div></div>'+
+    '<div><div class="lk">සුබ වේලාව</div><div class="lv">'+fmtT(6*60+((doy+i*37)%300))+'</div></div></div>'+
+    '<div class="pred">'+sg.pred[v]+'</div>'+
+    '<div class="note">මෙය සාමාන්‍ය ලග්න පලාපලයකි. ඔබේ නිවැරදි හඳහන දැනගැනීමට උපන් වේලාව සමඟ ජ්‍යොතිෂවේදියෙකු හමුවන්න.</div>';
+  document.getElementById("sheet").classList.add("open");
+  document.querySelector(".sheet .panel").scrollTop=0;
+  document.body.style.overflow="hidden";
+}
+function closeSheet(){
+  document.getElementById("sheet").classList.remove("open");
+  document.body.style.overflow="";
+}
+/* simplified rashi porondam */
+function porScore(a,b){
+  const d=Math.min(Math.abs(a-b),12-Math.abs(a-b));
+  const base={0:88,1:58,2:70,3:64,4:82,5:60,6:52}[d];
+  return Math.max(35,Math.min(96, base+((a*7+b*13)%9)-4));
+}
+function checkPorondam(){
+  const a=+document.getElementById("selA").value, b=+document.getElementById("selB").value;
+  const sc=porScore(a,b);
+  document.getElementById("porResult").classList.remove("hidden");
+  document.getElementById("scoreNum").textContent=sc+"%";
+  const arc=document.getElementById("scoreArc"), C=402;
+  arc.style.transition="stroke-dashoffset 1s ease";
+  arc.style.strokeDashoffset=C-(C*sc/100);
+  let v,vs;
+  if(sc>=80){v="ඉතා සුබයි ❖";vs="රාශි පොරොන්දම් අනුව මෙම යුවළ ඉතා හොඳින් ගැලපේ.";}
+  else if(sc>=65){v="සුබයි";vs="ගැලපීම යහපත්යි. සුළු බාධක මඟහැරිය හැක.";}
+  else if(sc>=50){v="මධ්‍යස්ථයි";vs="ගැලපීම සාමාන්‍යයි. අන්‍යෝන්‍ය අවබෝධය වැදගත්.";}
+  else{v="අභියෝගාත්මකයි";vs="ගැලපීම අඩුයි. ජ්‍යොතිෂ උපදෙස් නිර්දේශ කෙරේ.";}
+  document.getElementById("verdict").textContent=v;
+  document.getElementById("verdictSub").textContent=vs+" ("+SIGNS[a].si+" – "+SIGNS[b].si+")";
+  document.getElementById("porResult").scrollIntoView({behavior:"smooth",block:"center"});
+}
+function showTab(t){
+  ["today","rashi","porondam"].forEach(function(k){
+    document.getElementById("view-"+k).classList.toggle("hidden", k!==t);
+  });
+  document.getElementById("tabT").classList.toggle("on", t==="today");
+  document.getElementById("tabR").classList.toggle("on", t==="rashi");
+  document.getElementById("tabP").classList.toggle("on", t==="porondam");
+  window.scrollTo(0,0);
+}
+document.addEventListener("keydown",function(e){if(e.key==="Escape")closeSheet();});
+</script>
+</body>
+</html>
